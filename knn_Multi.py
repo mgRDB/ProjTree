@@ -610,11 +610,20 @@ leaf = 5
 # Number of projections tried
 split = 5
 
-# Boolean for Using Extra Data
-useExtra = False
+# Boolean for Using Extra Data (Anomaly)
+useExtra = True
+if useExtra:
+    # Using Generic Points
+    useAvg = True
 
 # Historical points
-hist = 1
+hist = 10
+
+# Historical Anomalies
+alooking = 5
+
+# Generic Points
+atyp = 10
 
 # Dataset Choice
 # 0 is Iris
@@ -630,15 +639,15 @@ hist = 1
 # 10 is Ionosphere
 # 11 is Sonar
 # 12 is Steel Plate Faults
-setChoice = 6
+setChoice = 11
 
 # Test Parameters
-k_test = [3, 5, 7]
-tree_test = [5, 7, 9]
-leaf_test = [5, 7, 9]
-split_test = [5, 7, 9]
-y_test = [10, 12, 14]
-percent_test = [.3, .25, .2, .15]
+k_test = [6, 8]
+tree_test = [6,8]
+leaf_test = [6, 8]
+split_test = [6, 8]
+y_test = [11, 13]
+percent_test = [.25, .15]
 
 # Test Points
 testNum = 15
@@ -900,11 +909,20 @@ if (useExtra):
             pvid = np.sqrt(pvid)
             
             if psd >= sdm - sdiqr and psd <= sdm + sdiqr:
-                true.append("normal")
+                if psd >= sdm - 0.75 * sdiqr and psd <= sdm - 0.25 * sdiqr or psd <= sdm + 0.75 * sdiqr and psd >= sdm + 0.25 * sdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pved >= vedm - vediqr and pved <= vedm + vediqr:
-                true.append("normal")
+                if pved >= vedm - 0.75 * vediqr and pved <= vedm - 0.25 * vediqr or pved <= vedm + 0.75 * vediqr and pved >= vedm + 0.25 * vediqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pvid >= vidm - vidiqr and pvid <= vidm + vidiqr:
-                true.append("normal")
+                if pvid >= vidm - 0.75 * vidiqr and pvid <= vidm - 0.25 * vidiqr or pvid <= vidm + 0.75 * vidiqr and pvid >= vidm + 0.25 * vidiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
 
@@ -944,9 +962,15 @@ if (useExtra):
             pMd = np.sqrt(pMd)
             
             if pBd >= Bdm - Bdiqr and pBd <= Bdm + Bdiqr:
-                true.append("normal")
+                if pBd >= Bdm - 0.75 * Bdiqr and pBd <= Bdm - 0.25 * Bdiqr or pBd <= Bdm + 0.75 * Bdiqr and pBd >= Bdm + 0.25 * Bdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pMd >= Mdm - Mdiqr and pMd <= Mdm + Mdiqr:
-                true.append("normal")
+                if pMd >= Mdm - 0.75 * Mdiqr and pMd <= Mdm - 0.25 * Mdiqr or pMd <= Mdm + 0.75 * Mdiqr and pMd >= Mdm + 0.25 * Mdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
 
@@ -1042,17 +1066,35 @@ if (useExtra):
             psevd = np.sqrt(psevd)
             
             if poned >= onedm - onediqr and poned <= onedm + onediqr:
-                true.append("normal")
+                if poned >= onedm - 0.75 * onediqr and poned <= onedm - 0.25 * onediqr or poned <= onedm + 0.75 * onediqr and poned >= onedm + 0.25 * onediqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif ptwod >= twodm - twodiqr and ptwod <= twodm + twodiqr:
-                true.append("normal")
+                if ptwod >= twodm - 0.75 * twodiqr and ptwod <= twodm - 0.25 * twodiqr or ptwod <= twodm + 0.75 * twodiqr and ptwod >= twodm + 0.25 * twodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pthrd >= thrdm - thrdiqr and pthrd <= thrdm + thrdiqr:
-                true.append("normal")
+                if pthrd >= thrdm - 0.75 * thrdiqr and pthrd <= thrdm - 0.25 * thrdiqr or pthrd <= thrdm + 0.75 * thrdiqr and pthrd >= thrdm + 0.25 * thrdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pfivd >= fivdm - fivdiqr and pfivd <= fivdm + fivdiqr:
-                true.append("normal")
+                if pfivd >= fivdm - 0.75 * fivdiqr and pfivd <= fivdm - 0.25 * fivdiqr or pfivd <= fivdm + 0.75 * fivdiqr and pfivd >= fivdm + 0.25 * fivdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif psixd >= sixdm - sixdiqr and psixd <= sixdm + sixdiqr:
-                true.append("normal")
+                if psixd >= sixdm - 0.75 * sixdiqr and psixd <= sixdm - 0.25 * sixdiqr or psixd <= sixdm + 0.75 * sixdiqr and psixd >= sixdm + 0.25 * sixdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif psevd >= sevdm - sevdiqr and psevd <= sevdm + sevdiqr:
-                true.append("normal")
+                if psevd >= sevdm - 0.75 * sevdiqr and psevd <= sevdm - 0.25 * sevdiqr or psevd <= sevdm + 0.75 * sevdiqr and psevd >= sevdm + 0.25 * sevdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
 
@@ -1106,11 +1148,20 @@ if (useExtra):
             pthrd = np.sqrt(pthrd)
         
             if poned >= onedm - onediqr and poned <= onedm + onediqr:
-                true.append("normal")
+                if poned >= onedm - 0.75 * onediqr and poned <= onedm - 0.25 * onediqr or poned <= onedm + 0.75 * onediqr and poned >= onedm + 0.25 * onediqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif ptwod >= twodm - twodiqr and ptwod <= twodm + twodiqr:
-                true.append("normal")
+                if ptwod >= twodm - 0.75 * twodiqr and ptwod <= twodm - 0.25 * twodiqr or ptwod <= twodm + 0.75 * twodiqr and ptwod >= twodm + 0.25 * twodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pthrd >= thrdm - thrdiqr and pthrd <= thrdm + thrdiqr:
-                true.append("normal")
+                if pthrd >= thrdm - 0.75 * thrdiqr and pthrd <= thrdm - 0.25 * thrdiqr or pthrd <= thrdm + 0.75 * thrdiqr and pthrd >= thrdm + 0.25 * thrdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
 
@@ -1164,11 +1215,20 @@ if (useExtra):
             ptwod = np.sqrt(ptwod)
 
             if pzerod >= zerodm - zerodiqr and pzerod <= zerodm + zerodiqr:
-                true.append("normal")
+                if pzerod >= zerodm - 0.75 * zerodiqr and pzerod <= zerodm - 0.25 * zerodiqr or pzerod <= zerodm + 0.75 * zerodiqr and pzerod >= zerodm + 0.25 * zerodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif poned >= onedm - onediqr and poned <= onedm + onediqr:
-                true.append("normal")
+                if poned >= onedm - 0.75 * onediqr and poned <= onedm - 0.25 * onediqr or poned <= onedm + 0.75 * onediqr and poned >= onedm + 0.25 * onediqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif ptwod >= twodm - twodiqr and ptwod <= twodm + twodiqr:
-                true.append("normal")
+                if ptwod >= twodm - 0.75 * twodiqr and ptwod <= twodm - 0.25 * twodiqr or ptwod <= twodm + 0.75 * twodiqr and ptwod >= twodm + 0.25 * twodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
     
@@ -1320,25 +1380,50 @@ if (useExtra):
             pnind = np.sqrt(pnind)
             
             if pzerod >= zerodm - zerodiqr and pzerod <= zerodm + zerodiqr:
-                true.append("normal")
+                if pzerod >= zerodm - 0.75 * zerodiqr and pzerod <= zerodm - 0.25 * zerodiqr or pzerod <= zerodm + 0.75 * zerodiqr and pzerod >= zerodm + 0.25 * zerodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif poned >= onedm - onediqr and poned <= onedm + onediqr:
-                true.append("normal")
+                if poned >= onedm - 0.75 * onediqr and poned <= onedm - 0.25 * onediqr or poned <= onedm + 0.75 * onediqr and poned >= onedm + 0.25 * onediqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif ptwod >= twodm - twodiqr and ptwod <= twodm + twodiqr:
-                true.append("normal")
+                if ptwod >= twodm - 0.75 * twodiqr and ptwod <= twodm - 0.25 * twodiqr or ptwod <= twodm + 0.75 * twodiqr and ptwod >= twodm + 0.25 * twodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pthrd >= thrdm - thrdiqr and pthrd <= thrdm + thrdiqr:
-                true.append("normal")
-            elif pfoud >= foudm - foudiqr and pfoud <= foudm + foudiqr:
-                true.append("normal")
+                if pthrd >= thrdm - 0.75 * thrdiqr and pthrd <= thrdm - 0.25 * thrdiqr or pthrd <= thrdm + 0.75 * thrdiqr and pthrd >= thrdm + 0.25 * thrdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pfivd >= fivdm - fivdiqr and pfivd <= fivdm + fivdiqr:
-                true.append("normal")
+                if pfivd >= fivdm - 0.75 * fivdiqr and pfivd <= fivdm - 0.25 * fivdiqr or pfivd <= fivdm + 0.75 * fivdiqr and pfivd >= fivdm + 0.25 * fivdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif psixd >= sixdm - sixdiqr and psixd <= sixdm + sixdiqr:
-                true.append("normal")
+                if psixd >= sixdm - 0.75 * sixdiqr and psixd <= sixdm - 0.25 * sixdiqr or psixd <= sixdm + 0.75 * sixdiqr and psixd >= sixdm + 0.25 * sixdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif psevd >= sevdm - sevdiqr and psevd <= sevdm + sevdiqr:
-                true.append("normal")
+                if psevd >= sevdm - 0.75 * sevdiqr and psevd <= sevdm - 0.25 * sevdiqr or psevd <= sevdm + 0.75 * sevdiqr and psevd >= sevdm + 0.25 * sevdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif peigd >= eigdm - eigdiqr and peigd <= eigdm + eigdiqr:
-                true.append("normal")
+                if peigd >= eigdm - 0.75 * eigdiqr and peigd <= eigdm - 0.25 * eigdiqr or peigd <= eigdm + 0.75 * eigdiqr and peigd >= eigdm + 0.25 * eigdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pnind >= nindm - nindiqr and pnind <= nindm + nindiqr:
-                true.append("normal")
+                if pnind >= nindm - 0.75 * nindiqr and pnind <= nindm - 0.25 * nindiqr or pnind <= nindm + 0.75 * nindiqr and pnind >= nindm + 0.25 * nindiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
 
@@ -1378,9 +1463,15 @@ if (useExtra):
             pzerod = np.sqrt(pzerod)
 
             if poned >= onedm - onediqr and poned <= onedm + onediqr:
-                true.append("normal")
+                if poned >= onedm - 0.75 * onediqr and poned <= onedm - 0.25 * onediqr or poned <= onedm + 0.75 * onediqr and poned >= onedm + 0.25 * onediqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pzerod >= zerodm - zerodiqr and pzerod <= zerodm + zerodiqr:
-                true.append("normal")
+                if pzerod >= zerodm - 0.75 * zerodiqr and pzerod <= zerodm - 0.25 * zerodiqr or pzerod <= zerodm + 0.75 * zerodiqr and pzerod >= zerodm + 0.25 * zerodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
 
@@ -1448,13 +1539,25 @@ if (useExtra):
             pthrd = np.sqrt(pthrd)
 
             if pzerod >= zerodm - zerodiqr and pzerod <= zerodm + zerodiqr:
-                true.append("normal")
+                if pzerod >= zerodm - 0.75 * zerodiqr and pzerod <= zerodm - 0.25 * zerodiqr or pzerod <= zerodm + 0.75 * zerodiqr and pzerod >= zerodm + 0.25 * zerodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif poned >= onedm - onediqr and poned <= onedm + onediqr:
-                true.append("normal")
+                if poned >= onedm - 0.75 * onediqr and poned <= onedm - 0.25 * onediqr or poned <= onedm + 0.75 * onediqr and poned >= onedm + 0.25 * onediqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif ptwod >= twodm - twodiqr and ptwod <= twodm + twodiqr:
-                true.append("normal")
+                if ptwod >= twodm - 0.75 * twodiqr and ptwod <= twodm - 0.25 * twodiqr or ptwod <= twodm + 0.75 * twodiqr and ptwod >= twodm + 0.25 * twodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pthrd >= thrdm - thrdiqr and pthrd <= thrdm + thrdiqr:
-                true.append("normal")
+                if pthrd >= thrdm - 0.75 * thrdiqr and pthrd <= thrdm - 0.25 * thrdiqr or pthrd <= thrdm + 0.75 * thrdiqr and pthrd >= thrdm + 0.25 * thrdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
 
@@ -1480,7 +1583,10 @@ if (useExtra):
             pzerod = np.sqrt(pzerod)
 
             if pzerod >= zerodm - zerodiqr and pzerod <= zerodm + zerodiqr:
-                true.append("normal")
+                if pzerod >= zerodm - 0.75 * zerodiqr and pzerod <= zerodm - 0.25 * zerodiqr or pzerod <= zerodm + 0.75 * zerodiqr and pzerod >= zerodm + 0.25 * zerodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
 
@@ -1520,9 +1626,15 @@ if (useExtra):
             poned = np.sqrt(poned)
 
             if pzerod >= zerodm - zerodiqr and pzerod <= zerodm + zerodiqr:
-                true.append("normal")
+                if pzerod >= zerodm - 0.75 * zerodiqr and pzerod <= zerodm - 0.25 * zerodiqr or pzerod <= zerodm + 0.75 * zerodiqr and pzerod >= zerodm + 0.25 * zerodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif poned >= onedm - onediqr and poned <= onedm + onediqr:
-                true.append("normal")
+                if poned >= onedm - 0.75 * onediqr and poned <= onedm - 0.25 * onediqr or poned <= onedm + 0.75 * onediqr and poned >= onedm + 0.25 * onediqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
 
@@ -1562,9 +1674,15 @@ if (useExtra):
             poned = np.sqrt(poned)
 
             if pzerod >= zerodm - zerodiqr and pzerod <= zerodm + zerodiqr:
-                true.append("normal")
+                if pzerod >= zerodm - 0.75 * zerodiqr and pzerod <= zerodm - 0.25 * zerodiqr or pzerod <= zerodm + 0.75 * zerodiqr and pzerod >= zerodm + 0.25 * zerodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif poned >= onedm - onediqr and poned <= onedm + onediqr:
-                true.append("normal")
+                if poned >= onedm - 0.75 * onediqr and poned <= onedm - 0.25 * onediqr or poned <= onedm + 0.75 * onediqr and poned >= onedm + 0.25 * onediqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
 
@@ -1604,9 +1722,15 @@ if (useExtra):
             poned = np.sqrt(poned)
 
             if pzerod >= zerodm - zerodiqr and pzerod <= zerodm + zerodiqr:
-                true.append("normal")
+                if pzerod >= zerodm - 0.75 * zerodiqr and pzerod <= zerodm - 0.25 * zerodiqr or pzerod <= zerodm + 0.75 * zerodiqr and pzerod >= zerodm + 0.25 * zerodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif poned >= onedm - onediqr and poned <= onedm + onediqr:
-                true.append("normal")
+                if poned >= onedm - 0.75 * onediqr and poned <= onedm - 0.25 * onediqr or poned <= onedm + 0.75 * onediqr and poned >= onedm + 0.25 * onediqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
 
@@ -1716,19 +1840,40 @@ if (useExtra):
             psixd = np.sqrt(psixd)
             
             if pzerod >= zerodm - zerodiqr and pzerod <= zerodm + zerodiqr:
-                true.append("normal")
+                if pzerod >= zerodm - 0.75 * zerodiqr and pzerod <= zerodm - 0.25 * zerodiqr or pzerod <= zerodm + 0.75 * zerodiqr and pzerod >= zerodm + 0.25 * zerodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif poned >= onedm - onediqr and poned <= onedm + onediqr:
-                true.append("normal")
+                if poned >= onedm - 0.75 * onediqr and poned <= onedm - 0.25 * onediqr or poned <= onedm + 0.75 * onediqr and poned >= onedm + 0.25 * onediqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif ptwod >= twodm - twodiqr and ptwod <= twodm + twodiqr:
-                true.append("normal")
+                if ptwod >= twodm - 0.75 * twodiqr and ptwod <= twodm - 0.25 * twodiqr or ptwod <= twodm + 0.75 * twodiqr and ptwod >= twodm + 0.25 * twodiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pthrd >= thrdm - thrdiqr and pthrd <= thrdm + thrdiqr:
-                true.append("normal")
+                if pthrd >= thrdm - 0.75 * thrdiqr and pthrd <= thrdm - 0.25 * thrdiqr or pthrd <= thrdm + 0.75 * thrdiqr and pthrd >= thrdm + 0.25 * thrdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pfoud >= foudm - foudiqr and pfoud <= foudm + foudiqr:
-                true.append("normal")
+                if pfoud >= foudm - 0.75 * foudiqr and pfoud <= foudm - 0.25 * foudiqr or pfoud <= foudm + 0.75 * foudiqr and pfoud >= foudm + 0.25 * foudiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif pfivd >= fivdm - fivdiqr and pfivd <= fivdm + fivdiqr:
-                true.append("normal")
+                if pfivd >= fivdm - 0.75 * fivdiqr and pfivd <= fivdm - 0.25 * fivdiqr or pfivd <= fivdm + 0.75 * fivdiqr and pfivd >= fivdm + 0.25 * fivdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             elif psixd >= sixdm - sixdiqr and psixd <= sixdm + sixdiqr:
-                true.append("normal")
+                if psixd >= sixdm - 0.75 * sixdiqr and psixd <= sixdm - 0.25 * sixdiqr or psixd <= sixdm + 0.75 * sixdiqr and psixd >= sixdm + 0.25 * sixdiqr:
+                    true.append("typical")
+                else:
+                    true.append("Normal")
             else:
                 true.append("anomaly")
 
@@ -1739,9 +1884,20 @@ if (useExtra):
 
     know["class"] = true
 
-    know = know[know["class"] == "anomaly"]
-    historical = len(know)
+    know1 = know[know["class"] == "anomaly"]
+    know1 = know1[:alooking]
+    historical = len(know1)
+    print(know1)
     print("There are ", historical, " historical anomalies")
+
+    if useAvg:
+        # Generic Knowledge
+        print("")
+        know2 = know[know["class"] == "typical"]
+        know2 = know2[:atyp]
+        generic = len(know2)
+        print(know2)
+        print("There are ", generic, " historical generic points")
 
 
 ######################################
@@ -1764,7 +1920,7 @@ best = [0,0,0,1,0,0,0,0,0,0]
 
 if useExtra:
     percent_test = [0]
-    y_test = [0]
+    #y_test = [1]
 
 progress = 1
 outof = len(k_test)*len(tree_test)*len(leaf_test)*len(split_test)*len(y_test)*len(percent_test)
@@ -1784,7 +1940,10 @@ for k in k_test:
                         if (useExtra):
                             # More Knowledge
                             field = planter(testless, tree, leaf, split)
-                            knowledge = planter(know.drop(columns = ["class"]), tree, leaf, split)
+                            knowledge = planter(know1.drop(columns = ["class"]), tree, leaf, split)
+                            if useAvg:
+                                # Generic Knowledge
+                                general = planter(know2.drop(columns = ["class"]), tree, leaf, split)
                         
                         acc = 0
                         
@@ -1823,6 +1982,9 @@ for k in k_test:
                                 c = closest_with_distance(anomaly,flowers,k)["remove"]
                                 flowers = finder(anomaly, knowledge)
                                 d = closest_with_distance(anomaly,flowers,k)["remove"]
+                                if useAvg:
+                                    flowers = finder(anomaly, general)
+                                    e = closest_with_distance(anomaly,flowers,k)["remove"]
                             
                             
                             # print("")
@@ -1837,7 +1999,14 @@ for k in k_test:
                                     anomaly["class"] = "normal"
                             else:
                                 # More Knowledge
-                                if (c.mean() > d.mean()):
+                                if useAvg:
+                                    if e.min() < c.mean():
+                                        cmean = e.min()
+                                    else:
+                                        cmean = c.mean()
+                                else:
+                                    cmean = c.mean()
+                                if (cmean > d.min()):
                                     anomaly["class"] = "anomaly"
                                     pred = True
                                 else:
@@ -1870,6 +2039,9 @@ for k in k_test:
                                 c = closest_with_distance(anomaly,flowers,k)["remove"]
                                 flowers = finder(anomaly, knowledge)
                                 d = closest_with_distance(anomaly,flowers,k)["remove"]
+                                if useAvg:
+                                    flowers = finder(anomaly, general)
+                                    e = closest_with_distance(anomaly,flowers,k)["remove"]
                             
                             
                             # print("")
@@ -1883,7 +2055,14 @@ for k in k_test:
                                     anomaly["class"] = "normal"
                             else:
                                 # More Knowledge
-                                if (c.mean() > d.mean()):
+                                if useAvg:
+                                    if e.min() < c.mean():
+                                        cmean = e.min()
+                                    else:
+                                        cmean = c.mean()
+                                else:
+                                    cmean = c.mean()
+                                if (cmean > d.min()):
                                     anomaly["class"] = "anomaly"
                                     pred = True
                                 else:
@@ -1917,6 +2096,9 @@ for k in k_test:
                                 c = closest_with_distance(anomaly,flowers,k)["remove"]
                                 flowers = finder(anomaly, knowledge)
                                 d = closest_with_distance(anomaly,flowers,k)["remove"]
+                                if useAvg:
+                                    flowers = finder(anomaly, general)
+                                    e = closest_with_distance(anomaly,flowers,k)["remove"]
                             
                             
                             # print("")
@@ -1930,7 +2112,14 @@ for k in k_test:
                                     anomaly["class"] = "normal"
                             else:    
                                 # More Knowledge
-                                if (c.mean() > d.mean()):
+                                if useAvg:
+                                    if e.min() < c.mean():
+                                        cmean = e.min()
+                                    else:
+                                        cmean = c.mean()
+                                else:
+                                    cmean = c.mean()
+                                if (cmean > d.min()):
                                     anomaly["class"] = "anomaly"
                                     pred = True
                                 else:
@@ -1964,6 +2153,9 @@ for k in k_test:
                                 c = closest_with_distance(anomaly,flowers,k)["remove"]
                                 flowers = finder(anomaly, knowledge)
                                 d = closest_with_distance(anomaly,flowers,k)["remove"]
+                                if useAvg:
+                                    flowers = finder(anomaly, general)
+                                    e = closest_with_distance(anomaly,flowers,k)["remove"]
                             
                             
                             # print("")
@@ -1977,7 +2169,14 @@ for k in k_test:
                                     anomaly["class"] = "normal"
                             else:
                                 # More Knowledge
-                                if (c.mean() > d.mean()):
+                                if useAvg:
+                                    if e.min() < c.mean():
+                                        cmean = e.min()
+                                    else:
+                                        cmean = c.mean()
+                                else:
+                                    cmean = c.mean()
+                                if (cmean > d.min()):
                                     anomaly["class"] = "anomaly"
                                     pred = True
                                 else:
@@ -2011,6 +2210,9 @@ for k in k_test:
                                 c = closest_with_distance(anomaly,flowers,k)["remove"]
                                 flowers = finder(anomaly, knowledge)
                                 d = closest_with_distance(anomaly,flowers,k)["remove"]
+                                if useAvg:
+                                    flowers = finder(anomaly, general)
+                                    e = closest_with_distance(anomaly,flowers,k)["remove"]
                             
                             
                             # print("")
@@ -2024,7 +2226,14 @@ for k in k_test:
                                     anomaly["class"] = "normal"
                             else:
                                 # More Knowledge
-                                if (c.mean() > d.mean()):
+                                if useAvg:
+                                    if e.min() < c.mean():
+                                        cmean = e.min()
+                                    else:
+                                        cmean = c.mean()
+                                else:
+                                    cmean = c.mean()
+                                if (cmean > d.min()):
                                     anomaly["class"] = "anomaly"
                                     pred = True
                                 else:
@@ -2058,6 +2267,9 @@ for k in k_test:
                                 c = closest_with_distance(anomaly,flowers,k)["remove"]
                                 flowers = finder(anomaly, knowledge)
                                 d = closest_with_distance(anomaly,flowers,k)["remove"]
+                                if useAvg:
+                                    flowers = finder(anomaly, general)
+                                    e = closest_with_distance(anomaly,flowers,k)["remove"]
                             
                             
                             # print("")
@@ -2071,7 +2283,14 @@ for k in k_test:
                                     anomaly["class"] = "normal"
                             else:
                                 # More Knowledge
-                                if (c.mean() > d.mean()):
+                                if useAvg:
+                                    if e.min() < c.mean():
+                                        cmean = e.min()
+                                    else:
+                                        cmean = c.mean()
+                                else:
+                                    cmean = c.mean()
+                                if (cmean > d.min()):
                                     anomaly["class"] = "anomaly"
                                     pred = True
                                 else:
@@ -2105,6 +2324,9 @@ for k in k_test:
                                 c = closest_with_distance(anomaly,flowers,k)["remove"]
                                 flowers = finder(anomaly, knowledge)
                                 d = closest_with_distance(anomaly,flowers,k)["remove"]
+                                if useAvg:
+                                    flowers = finder(anomaly, general)
+                                    e = closest_with_distance(anomaly,flowers,k)["remove"]
                             
                             
                             # print("")
@@ -2118,7 +2340,14 @@ for k in k_test:
                                     anomaly["class"] = "normal"
                             else:
                                 # More Knowledge
-                                if (c.mean() > d.mean()):
+                                if useAvg:
+                                    if e.min() < c.mean():
+                                        cmean = e.min()
+                                    else:
+                                        cmean = c.mean()
+                                else:
+                                    cmean = c.mean()
+                                if (cmean > d.min()):
                                     anomaly["class"] = "anomaly"
                                     pred = True
                                 else:
@@ -2152,6 +2381,9 @@ for k in k_test:
                                 c = closest_with_distance(anomaly,flowers,k)["remove"]
                                 flowers = finder(anomaly, knowledge)
                                 d = closest_with_distance(anomaly,flowers,k)["remove"]
+                                if useAvg:
+                                    flowers = finder(anomaly, general)
+                                    e = closest_with_distance(anomaly,flowers,k)["remove"]
                             
                             
                             # print("")
@@ -2165,7 +2397,14 @@ for k in k_test:
                                     anomaly["class"] = "normal"
                             else:    
                                 # More Knowledge
-                                if (c.mean() > d.mean()):
+                                if useAvg:
+                                    if e.min() < c.mean():
+                                        cmean = e.min()
+                                    else:
+                                        cmean = c.mean()
+                                else:
+                                    cmean = c.mean()
+                                if (cmean > d.min()):
                                     anomaly["class"] = "anomaly"
                                     pred = True
                                 else:
@@ -3134,15 +3373,18 @@ for k in k_test:
 #### Report Best Outcome ####
 
 os.system('clear')
-
-if(useExtra):
-    print("Rates with Extra Knowledge")
+if useAvg:
+    print("Rates with Anomaly and Generic Extra Knowledge")
+elif(useExtra):
+    print("Rates with Anomaly Extra Knowledge")
 else:
     print("Rates with Normal Knowledge")
 print("")
 
 if(useExtra):
-    print("Historical points: ", historical)
+    print("Historical anomaly points: ", historical)
+    if useAvg:
+        print("Historical generic points: ",generic)
     print("")
 
 print("Dataset selector: ", setChoice)
